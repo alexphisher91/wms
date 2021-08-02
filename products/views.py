@@ -7,10 +7,11 @@ from products.serializers import ProductSerializer
 
 
 class ProductAPIView(APIView):
-    authentication_classes = (SessionAuthentication, BasicAuthentication, TokenAuthentication)
+    authentication_classes = TokenAuthentication
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
+    @staticmethod
+    def get(request):
         products = Product.objects.all()
         serializer = ProductSerializer(products, many=True)
         return Response({'products': serializer.data})
